@@ -79,7 +79,7 @@ export default {
   },
   async created() {
     let result = await this.$axios(
-      "http://api.wantscart.com/app/layout/tab/9?ua=%7B%22version%22%3A%222.7.1%22%2C%22app_id%22%3A%22h6ybil3f9xuqws98h4%22%2C%22app_name%22%3A%22WANTS%E5%A5%BD%E7%89%A9%22%2C%22gender%22%3A%221%22%2C%22os%22%3A%221%22%7D"
+      "https://www.easy-mock.com/mock/5d48fa0e5ea3ee58388d1d01/wants/jujia"
     );
     this.SwipeArr = result.data.blocks[0].block_items;
     this.template1 = result.data.blocks[2].block_items;

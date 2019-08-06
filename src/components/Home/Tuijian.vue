@@ -52,16 +52,16 @@ export default {
       leftArr: []
     };
   },
-  methods:{
-    toDetail(){
-       this.$router.push({
-          name: "detail"
-       })
+  methods: {
+    toDetail() {
+      this.$router.push({
+        name: "detail"
+      });
     }
   },
   async created() {
     let result = await this.$axios(
-      "http://api.wantscart.com/app/layout/tab/12?ua=%7B%22version%22%3A%222.7.1%22%2C%22app_id%22%3A%22h6ybil3f9xuqws98h4%22%2C%22app_name%22%3A%22WANTS%E5%A5%BD%E7%89%A9%22%2C%22gender%22%3A%221%22%2C%22os%22%3A%221%22%7D"
+      "https://www.easy-mock.com/mock/5d48fa0e5ea3ee58388d1d01/wants/tuijian"
     );
     let data = result.data.blocks;
     // 顶部图片列表-好物推荐数据
