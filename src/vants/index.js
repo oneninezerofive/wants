@@ -33,7 +33,16 @@ import {
     //商品导航
     GoodsAction,
     GoodsActionIcon,
-    GoodsActionButton
+    GoodsActionButton,
+    //商品卡片
+    Card,
+    //Checkbox 复选框
+    Checkbox,
+    CheckboxGroup,
+    // 提交订单栏
+    SubmitBar,
+    // 弹出层
+    Popup,
 } from 'vant';
 
 
@@ -60,4 +69,12 @@ export default () => {
     Vue.use(Grid).use(GridItem);
     //商品导航
     Vue.use(GoodsAction).use(GoodsActionIcon).use(GoodsActionButton);
+    //商品卡片
+    Vue.use(Card);
+    //Checkbox 复选框
+    Vue.use(Checkbox).use(CheckboxGroup);
+    // 提交订单栏
+    Vue.use(SubmitBar);
+    // 弹出层
+    Vue.use(Popup);
 }

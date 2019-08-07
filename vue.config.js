@@ -6,9 +6,6 @@ module.exports = {
         performance: {
             hints: false
         },
-
-        //或者
-
         //警告 webpack 的性能提示
         performance: {
             hints: 'warning',

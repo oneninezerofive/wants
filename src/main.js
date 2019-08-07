@@ -6,7 +6,7 @@ import axios from 'axios'
 // 引入路由模块
 import router from './routers'
 // 引入状态管理
-import store from 'store'
+import store from './store'
 
 Vue.config.productionTip = false
 

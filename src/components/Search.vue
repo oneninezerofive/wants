@@ -10,7 +10,7 @@
           <img src="http://w.wantscart.com/static/images/6.jpg" width="30" alt />
         </div>
         <div class="search_header_txt">
-          <input type="search" id="search_header_txt" placeholder="请输入搜索内容" />
+          <input type="search" id="search_header_txt" placeholder="请输入搜索内容" v-model="keyword" @keyup.enter="getKey" />
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
     <!-- 3.搜索类型 -->
     <div class="search_content_subtitle public-auto" id="goodsList">
       <p v-for="(item,index) in searchArr" :key="index">
-        <span v-text="item"></span>
+        <span v-text="item" @click="searchKey($event)"></span>
       </p>
     </div>
   </div>
@@ -30,7 +30,8 @@
 export default {
   data() {
     return {
-      searchArr: []
+      searchArr: [],
+      keyword: ""
     };
   },
   methods: {
@@ -38,6 +39,26 @@ export default {
     goBack(name) {
       this.$router.push({
         name
+      });
+    },
+    // 搜索框回车键
+    getKey() {
+      // 把keyword传送到仓库里的state.keyword
+      this.$store.commit("setKey", this.keyword);
+      // 跳转到列表页
+      this.$router.push({
+        name: "list"
+      });
+      // 清空
+      this.keyword = "";
+    },
+    searchKey(event) {
+      var el = event.currentTarget;
+      // 把keyword传送到仓库里的state.keyword
+      this.$store.commit("setKey", el.innerHTML);
+      // 跳转到列表页
+      this.$router.push({
+        name: "list"
       });
     }
   },

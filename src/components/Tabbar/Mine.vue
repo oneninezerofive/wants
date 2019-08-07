@@ -12,16 +12,14 @@
       <!-- 头像 -->
       <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
       <!-- 用户名 -->
-      <p style="margin-left: 20px;">新用户-622</p>
+      <p style="margin-left: 20px;" v-text="getUsername"></p>
     </div>
     <!-- 分割线 -->
     <div style="background:#f9f9f9; height:4px;"></div>
     <!-- 我的订单 -->
     <div class="dingdan">
       <!-- 标题 -->
-      <div
-        style="display:flex;border-bottom:1px solid #f9f9f9; justify-content: space-between;padding:0 20px;height:40px;align-items: center;"
-      >
+      <div style="display:flex;border-bottom:1px solid #f9f9f9; justify-content: space-between;padding:0 20px;height:40px;align-items: center;">
         <span>我的订单</span>
         <span class="more" style="display:flex; align-items: center;color:#ddd;font-size:14px">
           查看全部
@@ -30,29 +28,20 @@
       </div>
       <!-- 宫格列表 -->
       <van-grid :border="false" style="height: 100px;" class="dingdangongge">
-        <van-grid-item
-          v-for="(item,value) in dingdanArr"
-          :key="value"
-          :icon="item.icon"
-          :text="item.title"
-        />
+        <van-grid-item v-for="(item,value) in dingdanArr" :key="value" :icon="item.icon" :text="item.title" />
       </van-grid>
     </div>
     <!-- 分割线 -->
     <div style="background:#f9f9f9; height:4px;"></div>
     <!-- 其他宫格 -->
     <van-grid :border="false" :column-num="4">
-      <van-grid-item
-        v-for="(item,index) in otherArr"
-        :key="index"
-        :icon="item.icon"
-        :text="item.title"
-      ></van-grid-item>
+      <van-grid-item v-for="(item,index) in otherArr" :key="index" :icon="item.icon" :text="item.title"></van-grid-item>
     </van-grid>
   </div>
 </template>
 
 <script>
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -99,8 +88,14 @@ export default {
           icon: "shop",
           title: "商家入驻"
         }
-      ]
+      ],
+      username: ""
     };
+  },
+  computed: {
+    getUsername: function() {
+      return this.username + Cookies.get("username");
+    }
   },
   methods: {
     //跳转系统设置

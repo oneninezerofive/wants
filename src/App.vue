@@ -21,4 +21,9 @@ export default {
 html {
   font-size: 16px;
 }
+html,
+body,
+#app {
+  height: 100%;
+}
 </style>
