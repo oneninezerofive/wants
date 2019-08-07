@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0b362d"],{"27c5":function(t,n,e){"use strict";e.r(n);var a=function(){var t=this,n=t.$createElement,e=t._self._c||n;return e("div",{staticClass:"setting"},[e("van-nav-bar",{attrs:{title:"系统设置","left-arrow":""},on:{"click-left":t.goBack}})],1)},c=[],o={data:function(){return{}},methods:{goBack:function(){this.$router.go(-1)}}},r=o,s=e("2877"),i=Object(s["a"])(r,a,c,!1,null,null,null);n["default"]=i.exports}}]);
-//# sourceMappingURL=chunk-2d0b362d.01f65cb4.js.map
