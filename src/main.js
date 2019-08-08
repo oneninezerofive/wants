@@ -8,6 +8,7 @@ import router from './routers'
 // 引入状态管理
 import store from './store'
 
+
 Vue.config.productionTip = false
 
 // Vue继承axios

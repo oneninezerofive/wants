@@ -1,5 +1,4 @@
 import Vue from 'vue'
-// import vant from 'vant'
 // 第三方组件
 // 搜索
 import {
@@ -34,17 +33,16 @@ import {
     GoodsAction,
     GoodsActionIcon,
     GoodsActionButton,
-    //商品卡片
-    Card,
     //Checkbox 复选框
     Checkbox,
     CheckboxGroup,
     // 提交订单栏
     SubmitBar,
-    // 弹出层
-    Popup,
+    List, //列表
+    Popup, //弹出层
+    //商品卡片
+    Card,
 } from 'vant';
-
 
 export default () => {
     Vue.use(Tabbar);
@@ -77,4 +75,6 @@ export default () => {
     Vue.use(SubmitBar);
     // 弹出层
     Vue.use(Popup);
+    // 列表
+    Vue.use(List);
 }

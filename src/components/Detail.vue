@@ -1,105 +1,92 @@
 <template>
   <div class="Detail">
-    <!-- 返回按钮 -->
+    <!-- 1.返回按钮 -->
     <div class="header">
       <van-icon name="arrow-left" size="30px" @click="goBack" />
-      <van-icon name="apps-o" size="30px" style="float:right" />
     </div>
-    <!-- 1.轮播图 -->
+    <!-- 2.轮播图 -->
     <van-swipe :autoplay="3000" indicator-color="red" style="background:#eee">
-      <van-swipe-item v-for="(item,index) in imgs" :key="index">
-        <img :src="item" width="100%" />
+      <van-swipe-item v-for="(item,index) in interfaceAddress.imgs" :key="index">
+        <img :src="item" width="375" alt />
       </van-swipe-item>
     </van-swipe>
-    <!-- 2.标题 -->
+    <!-- 3.标题 -->
     <div class="d_detail">
-      <div class="tit" v-text="title"></div>
-      <div class="price" v-text="price">
-        <span v-text="delprice"></span>
+      <div class="tit" v-text="interfaceAddress.title"></div>
+      <div class="price">
+        {{'￥'+price}}
+        <span v-text="'￥'+delprice"></span>
         <span id="discount"></span>
       </div>
       <div class="lable"></div>
     </div>
-    <!-- 3.品牌介绍 -->
+    <!-- 4.品牌介绍 -->
     <div class="d_brand">
       <p class="d_tit">品牌介绍</p>
-      <div class="d_img">
+      <div class="d_img" v-if="interfaceAddress.brand">
         <img id="brand_img" src width="25" height="25" style="width: 25px" />
-        <span class="font" v-text="brand"></span>
+        <span class="font" v-text="interfaceAddress.brand.name"></span>
       </div>
       <p id="d_detail" class="d_deta"></p>
     </div>
-    <!-- 4.商品详情页 -->
+    <!-- 5.商品详情页 -->
     <div class="titile">商品详情图</div>
-    <div class="d_detail2">
-      <img v-for="(item,index) in detail" :key="index" :src="item" alt />
-    </div>
-    <!-- 商品导航 -->
-    <div class="buy">
-      <van-goods-action>
-        <van-goods-action-icon icon="chat-o" text="客服" />
-        <van-goods-action-icon icon="cart-o" text="购物车" :info="num" @click="goTOcar" />
-        <van-goods-action-button
-          type="warning"
-          text="加入购物车"
-          style="background:#333333"
-          @click="joinButton"
-        />
-        <van-goods-action-button
-          type="default"
-          text="立即购买"
-          style="background:#fff034"
-          @click="buyButton"
-        />
-      </van-goods-action>
-    </div>
+    <div class="d_detail2" v-html="interfaceAddress.detail"></div>
+    <!-- 6.底部商品导航 -->
+    <van-goods-action class="buy">
+      <van-goods-action-icon icon="chat-o" text="客服" />
+      <van-goods-action-icon icon="cart-o" text="购物车" @click="goToCar()" :info="num" />
+      <van-goods-action-button
+        type="warning"
+        text="加入购物车"
+        style="background:#333333"
+        @click="joinButton"
+        class="joinBtn"
+      />
+      <van-goods-action-button
+        type="default"
+        text="立即购买"
+        style="background:#fff034"
+        @click="buyButton"
+      />
+    </van-goods-action>
+
+    <!-- 当处于为登录状态时，弹出显示层 -->
+    <van-popup v-model="show" v-show="show2">
+      <div class="new-alert">
+        <div class="no-login">
+          <span>你当前未登录</span>
+        </div>
+        <a class="gre-btn" @click="goSign()">我有wants账号，去登录&gt;&gt;</a>
+        <a class="gre-btn" @click="goSign()">去注册&gt;&gt;</a>
+        <a href="javascript:;" @click="close()">
+          <div class="thisxclose">×</div>
+        </a>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
-// import detaildata from '../assets/detailData/data'
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
-      // imgs:detaildata.imgs,
-      // title:detaildata.title,
-      // price:detaildata.price,
-      // brand:detaildata.brand,
-      // detail:detaildata.detail
+      interfaceAddress: [], //接口地址
+      //传给后端的数据price、shopname、imgurl、title
+      price: "",
+      shopname: "",
+      imgurl: "",
+      title: "",
 
-      num: 1, //当前购买数量
-      imgs: [
-        "http://static.wantscart.com/product/1560233565496_750_1000",
-        "http://static.wantscart.com/product/1560234495420_750_783",
-        "http://static.wantscart.com/product/1560234502298_750_884"
-      ],
-      title: "小蜜蜂情侣小白鞋板鞋A1",
-      price: "¥126",
-      delprice: "￥258",
-      brand: "CLADECL",
-      detail: [
-        "http://static.wantscart.com/product/1560234639592_750_356",
-        "http://static.wantscart.com/product/1560238361099_743_207",
-        "http://static.wantscart.com/product/1560234282157_750_555",
-        "http://static.wantscart.com/product/1560234640721_790_131",
-        "http://static.wantscart.com/product/1560234639729_750_518",
-        "http://static.wantscart.com/product/1560234278714_750_884",
-        "http://static.wantscart.com/product/1560234272336_750_764",
-        "http://static.wantscart.com/product/1560234272787_750_1036",
-        "http://static.wantscart.com/product/1560234279020_750_1204",
-        "http://static.wantscart.com/product/1560234303189_750_599",
-        "http://static.wantscart.com/product/1560234293560_750_1131",
-        "http://static.wantscart.com/product/1560234283418_750_946",
-        "http://static.wantscart.com/product/1560234298680_750_824",
-        "http://static.wantscart.com/product/1560234301813_750_783",
-        "http://static.wantscart.com/product/1560234307616_750_1086",
-        "http://static.wantscart.com/product/1560234296373_750_1343",
-        "http://static.wantscart.com/product/1560234297102_750_1120",
-        "http://static.wantscart.com/product/1560234289057_750_928",
-        "http://static.wantscart.com/product/1560234291162_750_725",
-        "http://static.wantscart.com/product/1560234288868_750_578",
-        "http://static.wantscart.com/product/1533195277716_790_553"
-      ]
+      delprice: "",
+      rowid: 0, //行id
+      colid: 0, //列id
+      num: 0, //购物车上标数量
+
+      bool: false,
+      show: false,
+      show2: true
     };
   },
   methods: {
@@ -107,17 +94,109 @@ export default {
     goBack() {
       this.$router.go(-1);
     },
+    //跳转登录页
+    goSign() {
+      this.$router.push("/sign");
+    },
+    // 加入购物车
     joinButton() {
-      // 加入购物车
+      let userName = Cookies.get("username");
+      let goodsId = this.rowid.toString() + this.colid.toString(); //获取行与列的id传给后端查询数据
+
+      //未登录
+      if (userName == undefined) {
+        this.show = true; //显示登陆弹出层
+      } else {
+        //已登录
+        this.$axios
+          .get("http://10.3.132.218:3000/cart/insert?", {
+            params: {
+              username: userName,
+              goodId: goodsId,
+              shopname: this.shopname,
+              price: this.price,
+              imgurl: this.imgurl,
+              title: this.title
+            }
+          })
+          .then(res => {
+            // console.log(res);
+          });
+        this.num++;
+      }
     },
+    //立即购买
     buyButton() {
-      //立即购买
+      // console.log("立即购买");
     },
-    //跳转购物车
-    goTOcar() {
-      this.$router.push({ path: "tabbar/car" });
+    // 点击显示层关闭按钮
+    close() {
+      this.show2 = false;
+      this.show = false;
+    },
+    goToCar() {
+      this.$router.push("/tabbar/car");
     }
+  },
+  async activated() {
+    let url = this.$route.path; //获取当前页面网址
+    this.rowid = url.substr(-3, 1) - 1; //获取网址传过来的行id
+    this.colid = url.substr(-1) * 1; //获取网址传过来的列id
+
+    let urlArr = [
+      [
+        "http://api.wantscart.com/product/144074/",
+        "http://api.wantscart.com/product/142651/",
+        "http://api.wantscart.com/product/150465/"
+      ],
+      [
+        "http://api.wantscart.com/product/140523/",
+        "http://api.wantscart.com/product/145474/",
+        "http://api.wantscart.com/product/142382/"
+      ],
+      [
+        "http://api.wantscart.com/product/144062/",
+        "http://api.wantscart.com/product/144596/",
+        "http://api.wantscart.com/product/139963/"
+      ],
+      [
+        "http://api.wantscart.com/product/139255/",
+        "http://api.wantscart.com/product/147711/",
+        "http://api.wantscart.com/product/147707/"
+      ],
+      [
+        "http://api.wantscart.com/product/131316/",
+        "http://api.wantscart.com/product/144948/",
+        "http://api.wantscart.com/product/144948/"
+      ],
+      [
+        "http://api.wantscart.com/product/142205/",
+        "http://api.wantscart.com/product/145307/",
+        "http://api.wantscart.com/product/145305/"
+      ]
+    ];
+    let interfaceUrl = await this.$axios(urlArr[this.rowid][this.colid]); //urlArr[id]:接口地址
+    this.interfaceAddress = interfaceUrl.data;
+
+    //价格处理
+    //在售价格
+    let price = this.interfaceAddress.price.toString();
+    this.price = price.slice(0, -2);
+    //现售价
+    let delprice = this.interfaceAddress.tag_price.toString();
+    this.delprice = delprice.slice(0, -2);
+
+    //传给后端的数据
+    this.shopname = this.interfaceAddress.creator.name;
+    this.imgurl = this.interfaceAddress.small_img;
+    this.title = this.interfaceAddress.title;
   }
+  // deactivated() {
+  //   let url = ""; //清除地址，否则要刷新才能出现第二次跳转后的详情页
+  // },
+  // destoryed() {
+  //   let url = "";
+  // }
 };
 </script>
 
@@ -132,7 +211,9 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  height: 30px;
   line-height: 20px;
+  z-index: 9999;
 }
 .d_detail {
   padding: 25px 0;
@@ -209,5 +290,56 @@ export default {
 .d_detail2 img {
   width: 100%;
   margin: -3px;
+}
+.Detail {
+  overflow-x: hidden;
+}
+
+/* 弹出层 */
+.new-alert {
+  width: 320px;
+  border-radius: 0.5em;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 1em;
+  text-align: center;
+}
+
+.no-login {
+  font-size: 20px;
+  padding: 1em;
+  text-align: center;
+}
+span {
+  vertical-align: middle;
+  color: #000;
+}
+.gre-btn {
+  background: #26c269;
+  width: 95%;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0 auto;
+  margin-bottom: 3%;
+  color: #fff;
+  display: block;
+  text-align: center;
+}
+
+.thisxclose {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  background: #f8f8f8;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 27px;
+  color: #666;
+  font-size: 2.4em;
 }
 </style>

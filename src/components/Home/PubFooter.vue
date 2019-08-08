@@ -2,7 +2,7 @@
     <div>
         <!-- 没有了 -->
         <div class="public-warn ViewList">
-            <p>没有啦~</p>
+            <!-- <p>没有啦~</p> -->
             <p>查看更多详情，请打开 WANTS 好物 客户端</p>
         </div>
   <!-- 底部信息 -->

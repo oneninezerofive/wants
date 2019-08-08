@@ -40,10 +40,14 @@ export default {
       var obj = {};
       // 第一次登录
       if (status != 1) {
-        obj = {
-          username: this.username.trim(),
-          password: this.pw.trim()
-        };
+        if (this.username.trim() && this.pw.trim()) {
+          obj = {
+            username: this.username.trim(),
+            password: this.pw.trim()
+          };
+        } else {
+          alert("请输入用户名和密码");
+        }
       } else {
         // 第二次登录
         obj = {

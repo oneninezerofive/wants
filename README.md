@@ -1,29 +1,40 @@
-# wants
+# 项目：wants好物
 
-## Project setup
+## 已上线
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+github仓库地址：https://oneninezerofive.github.io/wants/dist/index.html
 ```
 
-### Compiles and minifies for production
+### 团队分工
 ```
-npm run build
+组长：韦家振
+
+组员：黄丽、郑怡
+
+负责模块说明：
+
+韦家振：统筹项目，搭建项目构架，环境配置，模块安装，底层路由和路由守卫编写，性能优化，各模块功能测试、数据处理，修复BUG;
+
+黄 丽：webApp首页鞋靴和包类组件的UI和功能，列表页跳详情页的逻辑处理，购物车UI和逻辑实现，配合修复BUG;
+
+郑怡：负责webApp注册、登录、个人中心、搜索以及首页推荐页和服装页等组件的UI和功能的实现，前后端api以及数据库的编写,配合项目其他所需工作
+
+bug：清空购物车后，底部的合计总价不能实时更新，需要刷新页面才可以。
+
 ```
 
-### Run your tests
+### 项目目录
+
 ```
-npm run test
+│──────src
+│      ├─assets           静态资源文件夹   
+│      ├─components       组件文件夹
+│              ├─Home     首页组件文件夹   
+│              └─Tabbar   底部组件文件夹         
+├──────routers.js         路由配置文件
+├──────main.js            主入口文件
+├──────store.js           vuex仓库入口
+
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
