@@ -39,7 +39,6 @@
 
 <script>
 // 引入js-cookie
-import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -62,9 +61,11 @@ export default {
     // 确定退出跳转首页
     comfQiut() {
       // 清除cookie中的登录信息
-      Cookies.set("status", 0);
-      Cookies.remove("tokenCode");
-      Cookies.remove("username");
+      // Cookies.set("status", 0);
+      // Cookies.remove("tokenCode");
+      // Cookies.remove("username");
+      // 清除localStorage
+      window.localStorage.clear();
       // 隐藏弹出层
       this.show = false;
       // 跳转首页
@@ -134,7 +135,7 @@ export default {
 }
 .btn > span:last-child {
   border-left: 1px solid rgb(249, 249, 249);
-  color: rgb(245, 245, 117);
+  color: #ffd01e;
 }
 </style>
 

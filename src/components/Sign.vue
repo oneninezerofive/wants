@@ -21,8 +21,7 @@
 </template>
 
 <script>
-import Cookies from "js-cookie";
-import { log } from "util";
+// import { log } from "util";
 export default {
   data() {
     return {
@@ -37,9 +36,9 @@ export default {
     sign() {
       //登录
       // 查看是否是第一次登录
-      let status = Cookies.get("status");
+      let status = window.localStorage.getItem("status");
       var obj = {};
-      // 第一次登录
+      // 第一次登录,发送用户名和密码
       if (status != 1) {
         if (this.username.trim() && this.pw.trim()) {
           obj = {
@@ -50,9 +49,10 @@ export default {
           alert("请输入用户名和密码");
         }
       } else {
-        // 第二次登录
+        // 第二次登录，发送token
         obj = {
-          tokenCode: Cookies.get("tokenCode")
+          // tokenCode: Cookies.get("tokenCode")
+          tokenCode: window.localStorage.getItem("tokenCode")
         };
       }
       this.$axios.post("http://10.3.132.218:3000/signin/login", obj).then(
@@ -60,20 +60,28 @@ export default {
           let data = response.data;
           if (data.status == 1) {
             // 登录成功
-            Cookies.set("status", 1);
-            Cookies.set("username", data.username);
+            window.localStorage.setItem("status", 1);
+            window.localStorage.setItem("username", data.username);
+            // window.localStorage.getItem(name);
             if (data.token) {
-              Cookies.set("tokenCode", data.token);
+              window.localStorage.setItem("tokenCode", data.token);
             }
+            // Cookies.set("status", 1);
+            // Cookies.set("username", data.username);
+            // if (data.token) {
+            //   Cookies.set("tokenCode", data.token);
+            // }
             this.$router.push({
               path: "/"
             });
           } else {
             // 登录失败
-            Cookies.set("status", 0);
+            window.localStorage.setItem("status", 0);
             // 清除token和用户名
-            Cookies.remove("tokenCode");
-            Cookies.remove("username");
+            window.localStorage.removeItem("tokenCode");
+            window.localStorage.removeItem("username");
+            // Cookies.remove("tokenCode");
+            // Cookies.remove("username");
           }
           alert(data.meg);
           // console.log(this.$router);

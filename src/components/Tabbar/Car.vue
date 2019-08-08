@@ -3,9 +3,9 @@
     <!--头部 -->
     <header class="head-top rela">
       <div class>
-        <a href="javascript:voiod(0)" @click="goTohome()" class="aback"></a>
+        <a href="###" @click="goTohome()" class="aback"></a>
         <span class="topbar-title">购物车</span>
-        <a href="javascript:voiod(0)" @click="goTohome()" class="mla"></a>
+        <a href="javascript:void(0)" @click="goTohome()" class="mla"></a>
       </div>
     </header>
     <!--空购物车 -->
@@ -15,7 +15,7 @@
       </div>
       <div class="ftc emttip ft16 c666 mt">您的购物车空空如也</div>
       <div class="emt-a">
-        <a href="javascript:voiod(0)" @click="goTohome()" class="c999 ft16 mr5">随便逛逛</a>
+        <a href="javascript:void(0)" @click="goTohome()" class="c999 ft16 mr5">随便逛逛</a>
       </div>
     </div>
 
@@ -23,41 +23,18 @@
     <div class="shop-wrap" v-for="(item,index) in dataArr" :key="index" style="margin-bottom:50px">
       <!-- 店铺 -->
       <div class="shop">
-        <input
-          checked
-          class="shopstatus"
-          v-on:click="checkshop(index,$event)"
-          type="checkbox"
-          name="checkbox"
-        />
+        <input checked class="shopstatus" v-on:click="checkshop(index,$event)" type="checkbox" name="checkbox" />
         <div>
           <img src="../../assets/images/shop.png" width="25" alt />
           <span v-text="item.shopname"></span>
-          <a
-            v-on:click="del(index,$event)"
-            href="javascript:void(0)"
-            style="color:#000;text-decoration: none;float:right;padding-right:20px"
-          >删除</a>
+          <a v-on:click="del(index,$event)" href="javascript:void(0)" style="color:#000;text-decoration: none;float:right;padding-right:20px">删除</a>
         </div>
       </div>
 
       <!-- 购物车列表 -->
-      <van-card
-        style="margin-top:0"
-        :num="numarr[index]"
-        :price="item.price"
-        :title="item.title"
-        :thumb="item.imgurl"
-      >
+      <van-card style="margin-top:0" :num="numarr[index]" :price="item.price" :title="item.title" :thumb="item.imgurl">
         <div class="footer" slot="footer">
-          <input
-            checked
-            class="checkstatus"
-            v-on:click="checkgoods(index,$event)"
-            type="checkbox"
-            value="shop"
-            name="checkbox"
-          />
+          <input checked class="checkstatus" v-on:click="checkgoods(index,$event)" type="checkbox" value="shop" name="checkbox" />
           <input type="button" value="-" @click="cut(index)" />
           <input type="text" @keyup="inputnum(index,$event)" v-model.lazy="numarr[index]" />
           <input type="button" value="+" @click="add(index)" />
@@ -67,18 +44,13 @@
 
     <!-- 订单提交 -->
     <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
-      <van-checkbox
-        style="margin-left:15px;"
-        checked-color="#fff034"
-        v-model="checked"
-        @click="allCheck()"
-      >全选</van-checkbox>
+      <van-checkbox style="margin-left:15px;" checked-color="#fff034" v-model="checked" @click="allCheck()">全选</van-checkbox>
     </van-submit-bar>
   </div>
 </template>
 
 <script>
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { fail } from "assert";
 export default {
   data() {
@@ -94,7 +66,7 @@ export default {
     // 增加数量+1
     async add(index) {
       this.numarr[index]++;
-      let username = Cookies.get("username");
+      let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
       let url = await this.$axios("http://10.3.132.218:3000/cart/inc", {
         params: {
@@ -113,7 +85,7 @@ export default {
     // 减少数量-1
     async cut(index) {
       this.numarr[index]--;
-      let username = Cookies.get("username");
+      let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
       let url = await this.$axios("http://10.3.132.218:3000/cart/inc", {
         params: {
@@ -131,7 +103,7 @@ export default {
     // 手动输入数量
     async inputnum(index, event) {
       let el = event.currentTarget;
-      let username = Cookies.get("username");
+      let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
       if (el.value <= 1) {
         el.value = 1;
@@ -149,7 +121,7 @@ export default {
     async del(index, event) {
       let el = event.currentTarget;
       let res = confirm("您确定要删除吗？");
-      let username = Cookies.get("username");
+      let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
       if (this.dataArr.length == 0) {
         this.bool = true;
@@ -253,12 +225,11 @@ export default {
     }
   },
   async created() {
-    let username = Cookies.get("username");
+    let username = window.localStorage.getItem("username");
     let url = await this.$axios(
       "http://10.3.132.218:3000/cart?username=" + username
     );
     this.dataArr = url.data;
-    // console.log(this.dataArr);
     // if (this.dataArr.length == 0) {
     //   this.bool = true;
     // } else if (this.dataArr.length !== 0) {

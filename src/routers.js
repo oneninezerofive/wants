@@ -21,28 +21,28 @@ import Cookies from 'js-cookie'
 
 //路由懒加载
 const Tabbar = () =>
-    import ('./components/Tabbar')
+    import('./components/Tabbar')
 
 const Home = () =>
-    import ('./components/Tabbar/Home')
+    import('./components/Tabbar/Home')
 const Car = () =>
-    import ('./components/Tabbar/Car')
+    import('./components/Tabbar/Car')
 const Mine = () =>
-    import ('./components/Tabbar/Mine')
+    import('./components/Tabbar/Mine')
 
 
 const Detail = () =>
-    import ('./components/Detail')
+    import('./components/Detail')
 const Sign = () =>
-    import ('./components/Sign')
+    import('./components/Sign')
 const Setting = () =>
-    import ('./components/Setting')
+    import('./components/Setting')
 const News = () =>
-    import ('./components/News')
+    import('./components/News')
 const Search = () =>
-    import ('./components/Search')
+    import('./components/Search')
 const List = () =>
-    import ('./components/List')
+    import('./components/List')
 
 
 const routes = [{
@@ -115,8 +115,8 @@ const router = new VueRouter({
 })
 
 
-router.beforeEach(async(to, from, next) => {
-    let status = Cookies.get("status");
+router.beforeEach(async (to, from, next) => {
+    let status = window.localStorage.getItem('status');
     // 如果你是首页，详情页，登录页或者你登陆了，都可以进去，否则不给你进去
     if (status == 1 || to.path === '/sign' || to.path === '/tabbar/home' || to.path === '/search' || to.name === 'detail' || to.path === "/news" || to.path === "/list") {
         next()

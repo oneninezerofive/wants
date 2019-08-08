@@ -12,7 +12,9 @@
       <!-- 头像 -->
       <van-image round width="5rem" height="5rem" src="https://img.yzcdn.cn/vant/cat.jpeg" />
       <!-- 用户名 -->
-      <p style="margin-left: 20px;" v-text="getUsername"></p>
+      <keep-alive>
+        <p style="margin-left: 20px;" v-text="username"></p>
+      </keep-alive>
     </div>
     <!-- 分割线 -->
     <div style="background:#f9f9f9; height:4px;"></div>
@@ -41,7 +43,6 @@
 </template>
 
 <script>
-import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -92,11 +93,6 @@ export default {
       username: ""
     };
   },
-  computed: {
-    getUsername: function() {
-      return this.username + Cookies.get("username");
-    }
-  },
   methods: {
     //跳转系统设置
     goTOset() {
@@ -106,6 +102,12 @@ export default {
     newsTo() {
       this.$router.push("/news");
     }
+  },
+  activated() {
+    this.username = window.localStorage.getItem("username");
+  },
+  deactivated() {
+    this.username = "";
   }
 };
 </script>
