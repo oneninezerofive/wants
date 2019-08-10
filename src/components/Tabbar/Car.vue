@@ -23,18 +23,41 @@
     <div class="shop-wrap" v-for="(item,index) in dataArr" :key="index" style="margin-bottom:50px">
       <!-- 店铺 -->
       <div class="shop">
-        <input checked class="shopstatus" v-on:click="checkshop(index,$event)" type="checkbox" name="checkbox" />
+        <input
+          checked
+          class="shopstatus"
+          v-on:click="checkshop(index,$event)"
+          type="checkbox"
+          name="checkbox"
+        />
         <div>
           <img src="../../assets/images/shop.png" width="25" alt />
           <span v-text="item.shopname"></span>
-          <a v-on:click="del(index,$event)" href="javascript:void(0)" style="color:#000;text-decoration: none;float:right;padding-right:20px">删除</a>
+          <a
+            v-on:click="del(index,$event)"
+            href="javascript:void(0)"
+            style="color:#000;text-decoration: none;float:right;padding-right:20px"
+          >删除</a>
         </div>
       </div>
 
       <!-- 购物车列表 -->
-      <van-card style="margin-top:0" :num="numarr[index]" :price="item.price" :title="item.title" :thumb="item.imgurl">
+      <van-card
+        style="margin-top:0"
+        :num="numarr[index]"
+        :price="item.price"
+        :title="item.title"
+        :thumb="item.imgurl"
+      >
         <div class="footer" slot="footer">
-          <input checked class="checkstatus" v-on:click="checkgoods(index,$event)" type="checkbox" value="shop" name="checkbox" />
+          <input
+            checked
+            class="checkstatus"
+            v-on:click="checkgoods(index,$event)"
+            type="checkbox"
+            value="shop"
+            name="checkbox"
+          />
           <input type="button" value="-" @click="cut(index)" />
           <input type="text" @keyup="inputnum(index,$event)" v-model.lazy="numarr[index]" />
           <input type="button" value="+" @click="add(index)" />
@@ -44,7 +67,12 @@
 
     <!-- 订单提交 -->
     <van-submit-bar :price="totalPrice" button-text="提交订单" @submit="onSubmit">
-      <van-checkbox style="margin-left:15px;" checked-color="#fff034" v-model="checked" @click="allCheck()">全选</van-checkbox>
+      <van-checkbox
+        style="margin-left:15px;"
+        checked-color="#fff034"
+        v-model="checked"
+        @click="allCheck()"
+      >全选</van-checkbox>
     </van-submit-bar>
   </div>
 </template>
@@ -68,7 +96,7 @@ export default {
       this.numarr[index]++;
       let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
-      let url = await this.$axios("http://10.3.132.218:3000/cart/inc", {
+      let url = await this.$axios("http://47.107.134.140:3000/cart/inc", {
         params: {
           username,
           goodId,
@@ -87,7 +115,7 @@ export default {
       this.numarr[index]--;
       let username = window.localStorage.getItem("username");
       let goodId = this.dataArr[index].goodId;
-      let url = await this.$axios("http://10.3.132.218:3000/cart/inc", {
+      let url = await this.$axios("http://47.107.134.140:3000/cart/inc", {
         params: {
           username,
           goodId,
@@ -109,7 +137,7 @@ export default {
         el.value = 1;
       }
       let goodNum = el.value;
-      let url = await this.$axios("http://10.3.132.218:3000/cart/input", {
+      let url = await this.$axios("http://47.107.134.140:3000/cart/input", {
         params: {
           username,
           goodId,
@@ -129,7 +157,7 @@ export default {
         this.bool = false;
       }
       if (res) {
-        let url = await this.$axios("http://10.3.132.218:3000/cart/del?", {
+        let url = await this.$axios("http://47.107.134.140:3000/cart/del?", {
           params: {
             username,
             goodId
@@ -227,7 +255,7 @@ export default {
   async created() {
     let username = window.localStorage.getItem("username");
     let url = await this.$axios(
-      "http://10.3.132.218:3000/cart?username=" + username
+      "http://47.107.134.140:3000/cart?username=" + username
     );
     this.dataArr = url.data;
     // if (this.dataArr.length == 0) {

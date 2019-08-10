@@ -55,7 +55,7 @@ export default {
           tokenCode: window.localStorage.getItem("tokenCode")
         };
       }
-      this.$axios.post("http://10.3.132.218:3000/signin/login", obj).then(
+      this.$axios.post("http://47.107.134.140:3000/signin/login", obj).then(
         function(response) {
           let data = response.data;
           if (data.status == 1) {
