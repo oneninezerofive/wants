@@ -3,6 +3,9 @@
 ## 已上线
 ```
 github仓库地址：https://oneninezerofive.github.io/wants/dist/index.html
+
+上线地址：http://47.107.134.140:1905
+
 ```
 
 ### 团队分工
